@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://client-admin-upny.vercel.app/login",
     credentials: true,
   }),
 );
@@ -43,8 +43,21 @@ app.use((err, req, res, next) => {
 app.use("/api/admin", admin);
 app.use("/api/products", productRoutes);
 
+app.get("/", (req, res) => {
+  res.send("Welcome to the Admin API");
+});
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+// Vercel
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.log(`Server running on PORT ${PORT}`);
+  });
+}
+
+export default app;
