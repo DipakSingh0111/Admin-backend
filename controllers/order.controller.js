@@ -6,11 +6,6 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// ─────────────────────────────────────────
-// @desc    Add new product
-// @route   POST /api/products
-// @access  Public
-// ─────────────────────────────────────────
 const addProduct = async (req, res) => {
   try {
     const { name, description, category, productPrice, offerPrice } = req.body;

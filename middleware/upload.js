@@ -1,18 +1,13 @@
 import multer from "multer";
 import path from "path";
 import fs from "fs";
-import { fileURLToPath } from "url";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const uploadDir = "/tmp/uploads";
 
-// Ensure uploads folder exists
-const uploadDir = path.join(__dirname, "../uploads");
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// Storage configuration
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, uploadDir);
@@ -24,7 +19,6 @@ const storage = multer.diskStorage({
   },
 });
 
-// File type filter — only images allowed
 const fileFilter = (req, file, cb) => {
   const allowedTypes = /jpeg|jpg|png|webp/;
   const extname = allowedTypes.test(
@@ -43,8 +37,8 @@ const upload = multer({
   storage,
   fileFilter,
   limits: {
-    fileSize: 5 * 1024 * 1024, // Max 5MB per image
-    files: 4, // Max 4 images (as shown in the form)
+    fileSize: 5 * 1024 * 1024, // 5MB per image
+    files: 4,
   },
 });
 

@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(
   cors({
-    origin: "https://client-admin-upny.vercel.app/login",
+    origin: "https://client-admin-peach.vercel.app/login",
     credentials: true,
   }),
 );
@@ -31,13 +31,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Global Error Handler
-// app.use((err, req, res, next) => {
-//   const statusCode = err.statusCode || 500;
-//   res.status(statusCode).json({
-//     success: false,
-//     message: err.message || "Internal Server Error",
-//   });
-// });
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  res.status(statusCode).json({
+    success: false,
+    message: err.message || "Internal Server Error",
+  });
+});
 
 // Routes
 app.use("/api/admin", admin);
